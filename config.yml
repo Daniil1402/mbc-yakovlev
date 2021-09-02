@@ -1,0 +1,9 @@
+dev:
+  password: shptka_038e2cd2db37e97294815e9b1dbde51e
+  theme_id: "126507548838"
+  store: mbc-zeleniuk.myshopify.com
+prod:
+  password: shptka_038e2cd2db37e97294815e9b1dbde51e
+  theme_id: "113615077542"
+  store: mbc-zeleniuk.myshopify.com
+  
