@@ -1,0 +1,124 @@
+<div class="grid-container">
+<div class="grid-x grid-padding-x">
+  <div class="cell small-12 medium-7 photo-block">
+    <div 
+        class="owl-carousel" 
+        id="product-slider"
+        data-nav="{{ section.settings.nav }}"
+        data-dots="{{ section.settings.dots }}"
+        data-loop="{{ section.settings.loop }}"
+        data-items="1"
+        data-autoplay="{{ section.settings.autoplay }}"
+        >
+        {% for image in product.images %}
+          <div class="slide">
+            <img src="{{ image.src | img_url: 'master' }}" alt="{{ image.alt }}" />
+          </div>
+        {% endfor %}
+    </div>
+    <div id="product-slider-dots" class="owl-dots" {% if section.settings.dots == false %}style="display: none;"{% endif %}>
+      {% for image in product.images %}
+        <div class="owl-dot">
+          <img src="{{ image.src | img_url: 'master' }}" alt="{{ image.alt }}" />
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="cell small-12 medium-5">
+    <div class="text">
+      <h2>{{ product.title }}</h2>
+      <div class="option__block">
+        <div class="product__options">
+          {% for option in product.options_with_values %}
+            <div class="option">
+              <label for="SingleOptionSelector-{{ forloop.index0 }}">
+                {{ option.name }}
+              </label>
+              <select class="option-select"
+                id="SingleOptionSelector-{{ forloop.index0 }}"
+                data-index="option{{ forloop.index }}"
+              >
+                {%- assign optName = 'options' | append: forloop.index -%}
+                {%- assign option_values = [optName] | default: option.values -%}
+                {%- for value in option_values -%}
+                  <option value="{{ value | escape }}"{% if option.selected_value == value %} selected="selected"{% endif %}>{{ value }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="price__block">
+          <span class="price">{{ product.price | money }}</span>
+          <span class="tax">Tax included</span>
+        </div>
+        <div class="btns">
+          <div class="qwt">
+  
+          </div>
+          <button type="button" class="btn hover-opacity">Add To Cart</button>
+        </div>
+      </div>
+      
+      <div class="desc">
+        <p>{{ product.description | strip_html }}</p>
+      </div>
+    </div>
+    
+  </div>
+</div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "section",
+  "class": "product-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "btn_add_to_card",
+      "label": "Button Add to card",
+      "default": "Add to card"
+    },
+    {
+      "type": "text",
+      "id": "btn_soldout",
+      "label": "Button Soldout",
+      "default": "Soldout"
+    },
+    {
+      "type": "header",
+      "content": "Slider settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "nav",
+      "label": "Nav",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "dots",
+      "label": "Dots",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Loop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": false
+    }
+  ]
+}
+{% endschema %}
