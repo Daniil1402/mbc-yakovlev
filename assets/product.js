@@ -44,6 +44,7 @@ const changeCartCount = function (quantity) {
 }
 
 
+
 const addItem = (id, quantity) => {
 
   fetch("/cart/add.js", {
