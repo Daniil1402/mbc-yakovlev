@@ -18,6 +18,7 @@ openMenuBtn.addEventListener("click", function () {
   menuShow()
 })
 
+//********* carouseles *********//
 theme.carouseles = (function () {
 	const owlCarouseles = [
 			{

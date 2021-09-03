@@ -1,0 +1,18 @@
+{{ cart.item_count }}
+{% for item in cart.items %}
+ {{ item.title }}
+{% endfor %}
+
+<button class="cart__clear">cart clear</button>
+
+<script>
+  const cartClear = document.querySelector(".cart__clear");
+
+cartClear.addEventListener("click", function () {
+  
+  fetch('/cart/clear.js', {
+    method: 'POST'
+  });
+   
+});
+</script>

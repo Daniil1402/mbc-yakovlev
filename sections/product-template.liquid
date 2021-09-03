@@ -29,33 +29,92 @@
       <h2>{{ product.title }}</h2>
       <div class="option__block">
         <div class="product__options">
-          {% for option in product.options_with_values %}
-            <div class="option">
-              <label for="SingleOptionSelector-{{ forloop.index0 }}">
-                {{ option.name }}
+          {% for option in product.options %}
+            <div class="product__option">
+
+              {%- assign option_index = forloop.index0 -%}
+
+              <label>
+                {{ option }}
               </label>
-              <select class="option-select"
-                id="SingleOptionSelector-{{ forloop.index0 }}"
-                data-index="option{{ forloop.index }}"
-              >
-                {%- assign optName = 'options' | append: forloop.index -%}
-                {%- assign option_values = [optName] | default: option.values -%}
-                {%- for value in option_values -%}
-                  <option value="{{ value | escape }}"{% if option.selected_value == value %} selected="selected"{% endif %}>{{ value }}</option>
+              <select class="option__select">
+                {% for variant in product.variants %}
+                  <option 
+                      value="{{ variant.id }}"
+                      data-variant-price="{{ variant.price | money }}"
+                      {%- unless variant.available -%}
+                        disabled
+                      {%- endunless -%}
+                      >
+                      {{ variant.title }}
+                    </option>
                 {% endfor %}
               </select>
             </div>
           {% endfor %}
+        
         </div>
+        {%- comment -%}
+        <div class="product__options">
+          {%- assign buffer = "" -%}
+          
+        
+          {% for option in product.options %}
+            <div class="product__option">
+
+              {%- assign option_index = forloop.index0 -%}
+
+              <label>
+                {{ option }}
+              </label>
+              <select class="option__select">
+                {% for variant in product.variants %}
+                  {% assign value = variant.options[option_index] %}
+                  {% unless buffer contains value %}
+                    <option 
+                      value="{{ variant.id }}"
+                      {%- unless variant.available -%}
+                        disabled
+                      {%- endunless -%}
+                      >
+                      {{ variant.title }}
+                    </option>
+                    {% liquid
+                      assign buffer = buffer | join: ';;;'
+                      assign buffer = buffer | append: ';;;' | append: value
+                      assign buffer = buffer | split: ';;;'
+                    %}
+                  {% endunless %}
+                {% endfor %}
+              </select>
+            </div>
+          {% endfor %}
+        
+        </div>
+        {%- endcomment -%}
         <div class="price__block">
-          <span class="price">{{ product.price | money }}</span>
+
+          <span class="price">{{ product.selected_or_first_available_variant.price | money }}</span>
           <span class="tax">Tax included</span>
         </div>
         <div class="btns">
           <div class="qwt">
-  
+            <button type="button" class="qwt__minus">
+              -
+            </button>
+            <input class="quantity" type="number" value="1" min="1">
+            <button type="button" class="qwt__plus">
+              +
+            </button>
           </div>
-          <button type="button" class="btn hover-opacity">Add To Cart</button>
+          <button 
+            id="add-to-basket"
+            data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+            data-variant-quantity="1"
+            type="button" 
+            class="btn hover-opacity"
+            
+            >Add To Cart</button>
         </div>
       </div>
       
