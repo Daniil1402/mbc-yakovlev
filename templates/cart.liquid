@@ -11,8 +11,13 @@
 cartClear.addEventListener("click", function () {
   
   fetch('/cart/clear.js', {
-    method: 'POST'
-  });
-   
-});
+    method: 'POST',
+  })
+  .then((response) => {
+    if (response.ok) {
+      window.location.reload();
+    }
+  })
+
+})
 </script>

@@ -404,21 +404,17 @@ section.product-section {
       }
       .btns {
         display: flex;
-        .qwt {
+        .quantity__block {
           display: flex;
           align-items: center;
-          // width: 150px;
-          // width: 100%;
-          // height: 100%;
           border: 1px solid #D8D8D8;
           border-radius: 4px;
           margin-right: 15px;
-          .qwt__minus, .qwt__plus {
+          .quantity__minus, .quantity__plus {
             width: 45px;
             height: 100%;
             background: #FFFFFF;
             border: none;
-            // border: 1px solid #D8D8D8;
             box-shadow: inset 0px -2px 2px rgba(0, 0, 0, 0.13);
             font-family: "Mulish";
             font-style: normal;
@@ -507,6 +503,9 @@ section.cart-ajax {
   z-index: 30;
   transform: translateX(105%);
   transition: transform .3s linear;
+  @media (max-width: 425px) {
+    max-width: 100%;
+  }
   &.active {
     transition: transform .3s linear;
     transform: translate(0);
@@ -530,6 +529,7 @@ section.cart-ajax {
   }
   .cart__main {
     height: calc(100vh - 180px);
+    overflow-y: scroll;
     .no__items {
       display: block;
       font-family: "Mulish";
@@ -582,7 +582,7 @@ section.cart-ajax {
           }
           
         }
-        .cart__item-qwt {
+        .cart__item-quantity {
           display: flex;
           align-items: center;
           height: 32px;
@@ -592,7 +592,7 @@ section.cart-ajax {
           // height: 100%;
           border: 1px solid #D8D8D8;
           border-radius: 4px;
-          .qwt__minus, .qwt__plus {
+          .quantity__minus, .quantity__plus {
             width: 32px;
             height: 100%;
             background: #FFFFFF;
@@ -670,6 +670,9 @@ section.cart-ajax {
         align-items: center;
         text-align: center;
         padding: 15px 20px;
+        @media (max-width: 350px) {
+          padding: 10px 15px;
+        }
       }
       .cart__link {
         background: #FFFFFF;
@@ -690,3 +693,24 @@ section.cart-ajax {
     }
   }
 }
+
+@keyframes anim-rotate {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.ring-loader {
+	animation: anim-rotate 2s linear infinite;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	border: 1px solid #000;
+	border-left: none;
+	margin: 50px auto 0;
+}
+
+
